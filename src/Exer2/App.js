@@ -1,29 +1,32 @@
-import React from "react";
-import Produto from "./Produto";
+import React from 'react';
+import Produto from './Produto';
 
 const App = () => {
- const [dados, setDados] = React.useState(null)
- const [load, setLoad] = React.useState(null)
+  const [produto, setProduto] = React.useState(null);
 
- async function handleClick (event) {
+  React.useEffect(() => {
+    const produtoLocal = window.localStorage.getItem('produto');
+    if (produtoLocal !== 'null') setProduto(produtoLocal);
+  }, []);
 
- setLoad(true)
- const response = await fetch(`https://ranekapi.origamid.dev/json/api/produto/${event.target.innerText}`) 
- const json = await response.json();
- setDados(json);
- setLoad(false)
+  React.useEffect(() => {
+    if (produto !== null) window.localStorage.setItem('produto', produto);
+  }, [produto]);
 
- }
+  function handleClick({ target }) {
+    setProduto(target.innerText);
+  }
 
-return (
-  <div>
-    <button onClick={handleClick}>Notebook</button>
-    <button onClick={handleClick}>Smartphone</button>
-    <button onClick={handleClick}>Tablet</button>
-    {load && <p>Carregando...</p>}
-   {!load && dados && <Produto dados={dados} />}
-  </div>
-)
-}
+  return (
+    <div>
+      <h1>Preferência: {produto}</h1>
+      <button style={{ marginRight: '1rem' }} onClick={handleClick}>
+        notebook
+      </button>
+      <button onClick={handleClick}>smartphone</button>
+      <Produto produto={produto} />
+    </div>
+  );
+};
 
-export default App
+export default App;
