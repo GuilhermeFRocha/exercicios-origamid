@@ -1,20 +1,10 @@
-import React from 'react'
-import styled from 'styled-components'
-
-const Titulo = styled.h1`
-  font-size: 2rem;
-`
+import React from "react";
 
 
 const App = () => {
-  
 
+return (
+)
 
-  return (
-  <div>
-    
-  </div>
-  )
 }
-
 export default App
